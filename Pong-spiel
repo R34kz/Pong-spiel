@@ -1,0 +1,79 @@
+float player_x;
+float player_y;
+float ball_x;
+float ball_y;
+float ball_velocity_x;
+float ball_velocity_y;
+int punkte1;
+
+
+//magicnumbers:
+float multiplikator = 0.1;
+float player_velocity = 4.5;
+float ball_x_standard = 400;
+float ball_y_standard = 300;
+float player_y_end_up = player_y - 60;
+float player_y_end_down = player_y + 60;
+
+
+
+void setup(){
+  player_x = 20;
+  player_y = 60;
+  ball_x = ball_x_standard;
+  ball_y = ball_y_standard;
+  ball_velocity_x = -2.5;
+  ball_velocity_y = 0;
+  
+  fill(0, 102, 153);
+  textSize(32);
+  
+  size(800, 600);
+  rectMode(CENTER);
+ 
+}
+void draw(){
+  background(0, 0, 0);
+  rect(player_x, player_y, 20, 110);  
+  rect(ball_x, ball_y, 10, 10);
+  
+  if(keyPressed){
+    if(player_y < 550){  
+      if(keyCode == DOWN){
+        player_y = player_y + player_velocity;
+      }
+    }
+    if(player_y > 50){
+      if(keyCode == UP){
+        player_y = player_y - player_velocity;
+      }
+    }
+  }
+  
+  ball_x = ball_x + ball_velocity_x;
+  ball_y = ball_y + ball_velocity_y;
+  
+  if(ball_x < 35){
+    if(ball_y < (player_y + 60) && ball_y > (player_y -60)) {
+      ball_velocity_x = (-ball_velocity_x) +0.5;
+      ball_velocity_y = ball_velocity_y - (player_y - ball_y) * multiplikator;
+      punkte1 = punkte1 + 1;
+     }else {
+       ball_x = ball_x_standard;
+       ball_y = ball_y_standard;
+       ball_velocity_x = - 2.5;
+       ball_velocity_y = 0;
+       punkte1 = 0;
+     }
+  }
+  
+  if(ball_x > 785){
+   ball_velocity_x = -ball_velocity_x;
+  }
+  
+    if(ball_y > 595 || ball_y < 5){
+       ball_velocity_y = (-ball_velocity_y);
+    }
+    
+text("Punkte: " + punkte1, 30, 30);
+}  
